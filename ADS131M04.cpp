@@ -15,9 +15,7 @@
 #include "registerDefinitions.h"
 #include "ADS131M04.h"
 
-ADS131M04::ADS131M04(int8_t _csPin, int8_t _sclkPin, int8_t _misoPin, int8_t _mosiPin) {
-  csPin=_csPin;
-  sclkPin=_sclkPin;
-  misoPin=_misoPin;
-  mosiPin=mosiPin;
+ADS131M04::ADS131M04(int8_t _csPin, SPIClass* _spi) {
+  csPin = _csPin;
+  spi = _spi;
 }

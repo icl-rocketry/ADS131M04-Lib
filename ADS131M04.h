@@ -20,10 +20,11 @@
 
 class ADS131M04 {
   public:
-    ADS131M04(int8_t _csPin, int8_t _sclkPin, int8_t _misoPin, int8_t _mosiPin);
+    ADS131M04(int8_t _csPin, SPIClass* _spi);
 
   private:
-    int8_t csPin, sclkPin, misoPin, mosiPin;
+    int8_t csPin;
+    SPIClass* spi;
 };
 
 #endif
