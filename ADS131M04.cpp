@@ -8,22 +8,16 @@
 
    This library was made for Imperial College London Rocketry
    Created by Daniele Valentino Bella
-
-   */
-
-#ifndef ADS131M04_H
-#define ADS131M04_H
+*/
 
 #include <Arduino.h>
 #include <SPI.h>
 #include "registerDefinitions.h"
+#include "ADS131M04.h"
 
-class ADS131M04 {
-  public:
-    ADS131M04(int8_t _csPin, int8_t _sclkPin, int8_t _misoPin, int8_t _mosiPin);
-
-  private:
-    int8_t csPin, sclkPin, misoPin, mosiPin;
-};
-
-#endif
+ADS131M04::ADS131M04(int8_t _csPin, int8_t _sclkPin, int8_t _misoPin, int8_t _mosiPin) {
+  csPin=_csPin;
+  sclkPin=_sclkPin;
+  misoPin=_misoPin;
+  mosiPin=mosiPin;
+}
