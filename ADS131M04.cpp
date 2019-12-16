@@ -45,20 +45,23 @@ uint32_t ADS131M04::spiTransferWord(uint16_t inputData) {
   data |= spi->transfer(inputData<<8);
   data <<= 8;
   data |= spi->transfer(0x00);
-  data <<= 8;
 
   return data;
 }
 
-void ADS131M04::spiCommFrame(uint32_t * outputPointer, uint16_t command) {
+void ADS131M04::spiCommFrame(uint32_t * outPtr, uint16_t command) {
+  // Saves all the data of a communication frame to an array with pointer outPtr
+
   digitalWrite(csPin, LOW);
 
   spi->beginTransaction(SPISettings(SCLK_SPD, MSBFIRST, SPI_MODE0));
 
-  *outputPointer = spiTransferWord(command);
+  // Send the command in the first word
+  *outPtr = spiTransferWord(command);
+  // For the next 5 words, just read the data
   for (uint8_t i=1; i < 6; i++) {
-    outputPointer++;
-    *outputPointer = spiTransferWord();
+    outPtr++;
+    *outPtr = spiTransferWord();
   }
 
   spi->endTransaction();
