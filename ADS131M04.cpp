@@ -37,15 +37,31 @@ void ADS131M04::begin(void) {
   initialised=true;
 }
 
-uint32_t ADS131M04::spiTransferWord(uint16_t command) {
+uint32_t ADS131M04::spiTransferWord(uint16_t inputData) {
   // Transfer a 24 bit word
 
-  uint32_t data = spi->transfer(command>>8);
+  uint32_t data = spi->transfer(inputData>>8);
   data <<= 8;
-  data |= spi->transfer(command<<8);
+  data |= spi->transfer(inputData<<8);
   data <<= 8;
   data |= spi->transfer(0x00);
   data <<= 8;
 
   return data;
+}
+
+void ADS131M04::spiCommFrame(uint32_t * outputPointer, uint16_t command) {
+  digitalWrite(csPin, LOW);
+
+  spi->beginTransaction(SPISettings(SCLK_SPD, MSBFIRST, SPI_MODE0));
+
+  *outputPointer = spiTransferWord(command);
+  for (uint8_t i=1; i < 6; i++) {
+    outputPointer++;
+    *outputPointer = spiTransferWord();
+  }
+
+  spi->endTransaction();
+
+  digitalWrite(csPin, HIGH);
 }
