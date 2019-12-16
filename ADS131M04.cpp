@@ -18,4 +18,15 @@
 ADS131M04::ADS131M04(int8_t _csPin, SPIClass* _spi) {
   csPin = _csPin;
   spi = _spi;
+
+  initialised=false;
+}
+
+void ADS131M04::begin(void) {
+  pinMode(csPin, OUTPUT);
+  digitalWrite(csPin, HIGH);
+
+  spi->begin();
+
+  initialised=true;
 }

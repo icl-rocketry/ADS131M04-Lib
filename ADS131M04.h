@@ -21,10 +21,12 @@
 class ADS131M04 {
   public:
     ADS131M04(int8_t _csPin, SPIClass* _spi);
+    void begin(void);
 
   private:
     int8_t csPin;
     SPIClass* spi;
+    bool initialised;
 };
 
 #endif
