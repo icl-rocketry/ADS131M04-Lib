@@ -11,6 +11,7 @@
 */
 
 #define CLKIN_SPD 8192 // Clock speed for the CLKIN pin on the DAC
+#define SCLK_SPD 25000000 // SPI frequency of DAC
 
 #ifndef ADS131M04_H
 #define ADS131M04_H
@@ -24,10 +25,12 @@ class ADS131M04 {
     ADS131M04(int8_t _csPin, int8_t _clkoutPin, SPIClass* _spi, int8_t _clockCh = 1);
     void begin(void);
 
+
   private:
     int8_t csPin, clkoutPin, clockCh;
     SPIClass* spi;
     bool initialised;
+    uint32_t spiTransferWord(uint16_t inputData = 0x0000);
 };
 
 #endif

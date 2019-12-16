@@ -36,3 +36,16 @@ void ADS131M04::begin(void) {
 
   initialised=true;
 }
+
+uint32_t ADS131M04::spiTransferWord(uint16_t command) {
+  // Transfer a 24 bit word
+
+  uint32_t data = spi->transfer(command>>8);
+  data <<= 8;
+  data |= spi->transfer(command<<8);
+  data <<= 8;
+  data |= spi->transfer(0x00);
+  data <<= 8;
+
+  return data;
+}
