@@ -18,4 +18,9 @@
 #include <SPI.h>
 #include "registerDefinitions.h"
 
+class ADS131M04 {
+    ADS131M04();
+
+};
+
 #endif
