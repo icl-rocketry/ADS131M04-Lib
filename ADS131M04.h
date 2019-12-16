@@ -14,4 +14,8 @@
 #ifndef ADS131M04_H
 #define ADS131M04_H
 
+#include <Arduino.h>
+#include <SPI.h>
+#include "registerDefinitions.h"
+
 #endif
