@@ -10,7 +10,7 @@
    Created by Daniele Valentino Bella
 */
 
-#define CLKIN_SPD 8192 // Clock speed for the CLKIN pin on the DAC
+#define CLKIN_SPD 8192000 // Clock speed for the CLKIN pin on the DAC
 #define SCLK_SPD 25000000 // SPI frequency of DAC
 
 #ifndef ADS131M04_H
