@@ -8,8 +8,10 @@
 
    This library was made for Imperial College London Rocketry
    Created by Daniele Valentino Bella
+*/
 
-   */
+#define CLKIN_SPD 8192000 // Clock speed for the CLKIN pin on the DAC
+#define SCLK_SPD 1000000 // SPI frequency of DAC
 
 #ifndef ADS131M04_H
 #define ADS131M04_H
@@ -19,8 +21,18 @@
 #include "registerDefinitions.h"
 
 class ADS131M04 {
-    ADS131M04();
+  public:
+    ADS131M04(int8_t _csPin, int8_t _clkoutPin, SPIClass* _spi, int8_t _clockCh = 1);
+    void begin(void);
+    void spiCommFrame(int32_t * outputArray, uint16_t command = 0x0000);
 
+  private:
+    int8_t csPin, clkoutPin, clockCh;
+    SPIClass* spi;
+    bool initialised;
+    
+    uint32_t spiTransferWord(uint16_t inputData = 0x0000);
+    int32_t twoCompDeco(uint32_t data);
 };
 
 #endif
