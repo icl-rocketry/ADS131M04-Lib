@@ -37,12 +37,35 @@ void ADS131M04::begin(void) {
   initialised=true;
 }
 
+void ADS131M04::rawChannels(int8_t * channelArrPtr, int8_t channelArrLen, int32_t * outputArrPtr) {
+  /* Writes data from the channels specified in channelArr, to outputArr,
+     in the correct order.
+
+     channelArr should have values from 0-3, and channelArrLen should be the
+     length of that array, starting from 1.
+  */
+  
+  int32_t rawDataArr[5];
+
+  // Send initial (blank) set of data
+  spiCommFrame(&rawDataArr[0]);
+  
+  // Get data from response
+  spiCommFrame(&rawDataArr[0]);
+  
+  for (int8_t i = 0; i<channelArrLen; i++) {
+    *outputArrPtr = rawDataArr[*channelArrPtr];
+    outputArrPtr++;
+    channelArrPtr++;
+  }
+}
+
 int32_t ADS131M04::rawChannelSingle(int8_t channel) {
   /* Returns raw value from a single channel
      channel input from 0 to 4
   */
   
-  int32_t outputArray[5];
+  int32_t outputArray[6];
 
   // Send initial (blank) set of data
   spiCommFrame(&outputArray[0]);
