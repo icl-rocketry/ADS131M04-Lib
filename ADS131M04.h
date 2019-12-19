@@ -24,13 +24,13 @@ class ADS131M04 {
   public:
     ADS131M04(int8_t _csPin, int8_t _clkoutPin, SPIClass* _spi, int8_t _clockCh = 1);
     void begin(void);
-    void spiCommFrame(int32_t * outputArray, uint16_t command = 0x0000);
 
   private:
     int8_t csPin, clkoutPin, clockCh;
     SPIClass* spi;
     bool initialised;
     
+    void spiCommFrame(int32_t * outputArray, uint16_t command = 0x0000);
     uint32_t spiTransferWord(uint16_t inputData = 0x0000);
     int32_t twoCompDeco(uint32_t data);
 };
