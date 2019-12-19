@@ -42,14 +42,14 @@ uint32_t ADS131M04::spiTransferWord(uint16_t inputData) {
 
   uint32_t data = spi->transfer(inputData>>8);
   data <<= 8;
-  data |= spi->transfer(inputData<<8);
+  data |= spi->transfer(inputData);
   data <<= 8;
   data |= spi->transfer(0x00);
 
   return data;
 }
 
-void ADS131M04::spiCommFrame(uint32_t * outPtr, uint16_t command) {
+void ADS131M04::spiCommFrame(int32_t * outPtr, uint16_t command) {
   // Saves all the data of a communication frame to an array with pointer outPtr
 
   digitalWrite(csPin, LOW);
@@ -58,13 +58,27 @@ void ADS131M04::spiCommFrame(uint32_t * outPtr, uint16_t command) {
 
   // Send the command in the first word
   *outPtr = spiTransferWord(command);
-  // For the next 5 words, just read the data
-  for (uint8_t i=1; i < 6; i++) {
+
+  // For the next 4 words, just read the data
+  for (uint8_t i=1; i < 5; i++) {
     outPtr++;
-    *outPtr = spiTransferWord();
+    *outPtr = twoCompDeco(spiTransferWord());
   }
+
+  // Save CRC bits
+  outPtr++;
+  *outPtr = spiTransferWord();
 
   spi->endTransaction();
 
   digitalWrite(csPin, HIGH);
+}
+
+int32_t ADS131M04::twoCompDeco(uint32_t data) {
+  // Take the two's complement of the data
+
+  data <<= 8;
+  int32_t dataInt = (int)data;
+
+  return dataInt/pow(2,8);
 }
