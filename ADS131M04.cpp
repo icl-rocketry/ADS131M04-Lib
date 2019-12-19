@@ -62,18 +62,15 @@ void ADS131M04::rawChannels(int8_t * channelArrPtr, int8_t channelArrLen, int32_
 
 int32_t ADS131M04::rawChannelSingle(int8_t channel) {
   /* Returns raw value from a single channel
-     channel input from 0 to 4
+     channel input from 0-3
   */
   
-  int32_t outputArray[6];
+  int32_t outputArr[1];
+  int8_t channelArr[1] = {channel};
 
-  // Send initial (blank) set of data
-  spiCommFrame(&outputArray[0]);
-  
-  // Save response to outputArray
-  spiCommFrame(&outputArray[0]);
+  rawChannels(&channelArr[0], 1, &outputArr[0]);
 
-  return outputArray[channel+1];
+  return outputArr[0];
 }
 
 uint32_t ADS131M04::spiTransferWord(uint16_t inputData) {
