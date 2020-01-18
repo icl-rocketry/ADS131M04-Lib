@@ -30,9 +30,9 @@ void ADS131M04::begin(void) {
   spi->begin();
 
   // Set CLKOUT on the ESP32 to give the correct frequency for CLKIN on the DAC
+  ledcSetup(clockCh, CLKIN_SPD, 2);
   ledcAttachPin(clkoutPin, clockCh);
-  ledcSetup(clockCh, CLKIN_SPD, 8);
-  ledcWrite(clockCh, 127);
+  ledcWrite(clockCh, 2);
 
   initialised=true;
 }
