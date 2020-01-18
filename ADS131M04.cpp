@@ -90,7 +90,7 @@ void ADS131M04::spiCommFrame(int32_t * outPtr, uint16_t command) {
 
   digitalWrite(csPin, LOW);
 
-  spi->beginTransaction(SPISettings(SCLK_SPD, MSBFIRST, SPI_MODE0));
+  spi->beginTransaction(SPISettings(SCLK_SPD, MSBFIRST, SPI_MODE1));
 
   // Send the command in the first word
   *outPtr = spiTransferWord(command);
