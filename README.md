@@ -6,6 +6,32 @@ Click for the [ADS131M04 product page](https://www.ti.com/product/ADS131M04), an
 
 ## Library Usage
 
+### Initialising the library
+
+#### Class constructor
+
+``` 
+ADS131M04(int8_t _csPin, int8_t _clkoutPin, SPIClass* _spi, int8_t _clockCh = 1); 
+```
+
+Inputs:
+
+* ```int8_t _csPin```: Chip select pin number
+
+* ```int8_t _clkoutPin```: Pin used to produce the 8.192MHz clock required by the ADC on its CLKIN pin
+
+* ```SPIClass* _spi```: SPIClass object, configured with the appropriate settings and pins
+
+* ```int8_t _clockCh = 1```: LEDC channel used to generate the master clock for the ADC. Defaults to 1.
+
+#### Initialising the ADS131M04
+
+```
+void begin(void);
+```
+
+Initialises SPI interface, sets the chip select pin to the correct state, and makes the microcontroller output the clock frequency required by the ADS131M04. Must be called in ```void setup()```.
+
 ### Reading Channel Data
 
 #### Raw data from multiple channels
