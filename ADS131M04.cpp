@@ -129,15 +129,17 @@ uint16_t ADS131M04::readReg(uint8_t reg) {
 }
 
 uint32_t ADS131M04::spiTransferWord(uint16_t inputData) {
-  // Transfer a 24 bit word
+  /* Transfer a 24 bit word
+     Data returned is MSB aligned
+  */ 
 
-  uint32_t data = spi->transfer(inputData>>8);
+  uint32_t data = spi->transfer(inputData >> 8);
   data <<= 8;
-  data |= spi->transfer(inputData);
+  data |= spi->transfer((inputData<<8) >> 8);
   data <<= 8;
   data |= spi->transfer(0x00);
 
-  return data;
+  return data << 8;
 }
 
 void ADS131M04::spiCommFrame(uint32_t * outPtr, uint16_t command) {
