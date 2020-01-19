@@ -45,16 +45,14 @@ void ADS131M04::rawChannels(int8_t * channelArrPtr, int8_t channelArrLen, int32_
      length of that array, starting from 1.
   */
   
-  int32_t rawDataArr[5];
+  uint32_t rawDataArr[6];
 
-  // Send initial (blank) set of data
+  // Get data
   spiCommFrame(&rawDataArr[0]);
   
-  // Get data from response
-  spiCommFrame(&rawDataArr[0]);
-  
+  // Save the decoded data for each of the channels
   for (int8_t i = 0; i<channelArrLen; i++) {
-    *outputArrPtr = rawDataArr[*channelArrPtr];
+    *outputArrPtr = twoCompDeco(rawDataArr[*channelArrPtr+1]);
     outputArrPtr++;
     channelArrPtr++;
   }
