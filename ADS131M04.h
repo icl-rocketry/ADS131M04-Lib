@@ -27,7 +27,7 @@ class ADS131M04 {
     void rawChannels(int8_t * channelArrPtr, int8_t channelArrLen, int32_t * outputArrPtr);
     int32_t rawChannelSingle(int8_t channel);
     uint16_t readReg(uint8_t reg);
-
+    bool writeReg(uint8_t reg, uint16_t data);
 
   private:
     int8_t csPin, clkoutPin, clockCh;

@@ -71,6 +71,42 @@ int32_t ADS131M04::rawChannelSingle(int8_t channel) {
   return outputArr[0];
 }
 
+bool ADS131M04::writeReg(uint8_t reg, uint16_t data) {
+  /* Writes the content of data to the register reg
+     Returns true if successful
+  */
+  
+  uint8_t commandPref = 0x06;
+
+  // Make command word using syntax found in data sheet
+  uint16_t commandWord = (commandPref<<12) + (reg<<7);
+
+  digitalWrite(csPin, LOW);
+  spi->beginTransaction(SPISettings(SCLK_SPD, MSBFIRST, SPI_MODE1));
+
+  spiTransferWord(commandWord);
+  
+  spiTransferWord(data);
+
+  // Send 4 empty words
+  for (uint8_t i=0; i<4; i++) {
+    spiTransferWord();
+  }
+
+  spi->endTransaction();
+  digitalWrite(csPin, HIGH);
+
+  // Get response
+  uint32_t responseArr[6];
+  spiCommFrame(&responseArr[0]);
+
+  if ( ( (0x04<<12) + (reg<<7) ) == responseArr[0]) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 uint16_t ADS131M04::readReg(uint8_t reg) {
   /* Reads the content of single register found at address reg
      Returns register value
