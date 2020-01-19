@@ -33,3 +33,13 @@ int32_t rawChannelSingle(int8_t channel);
 Returns the raw value read from a single channel ```channel```.
 
 It is a wrapper function of the ```rawChannels``` method, thus if multiple channels need to be read, that method will be faster.
+
+### Registers
+
+#### Reading a single register
+
+```
+uint16_t readReg(uint8_t reg);
+```
+
+Sends a communication frame with the proper command to read the register with address ```reg```, then from the next communication frame returns the value of that register.
