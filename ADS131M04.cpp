@@ -73,6 +73,27 @@ int32_t ADS131M04::rawChannelSingle(int8_t channel) {
   return outputArr[0];
 }
 
+uint16_t ADS131M04::readReg(uint8_t reg) {
+  /* Reads the content of single register found at address reg
+     Returns register value
+  */
+  
+  uint8_t commandPref = 0x0A;
+
+  // Make command word using syntax found in data sheet
+  uint16_t commandWord = (commandPref << 12) + (reg << 7);
+
+  uint32_t responseArr[6];
+
+  // Use first frame to send command
+  spiCommFrame(&responseArr[0], commandWord);
+
+  // Read response
+  spiCommFrame(&responseArr[0]);
+
+  return responseArr[0] >> 16;
+}
+
 uint32_t ADS131M04::spiTransferWord(uint16_t inputData) {
   // Transfer a 24 bit word
 
@@ -85,7 +106,7 @@ uint32_t ADS131M04::spiTransferWord(uint16_t inputData) {
   return data;
 }
 
-void ADS131M04::spiCommFrame(int32_t * outPtr, uint16_t command) {
+void ADS131M04::spiCommFrame(uint32_t * outPtr, uint16_t command) {
   // Saves all the data of a communication frame to an array with pointer outPtr
 
   digitalWrite(csPin, LOW);
@@ -98,7 +119,7 @@ void ADS131M04::spiCommFrame(int32_t * outPtr, uint16_t command) {
   // For the next 4 words, just read the data
   for (uint8_t i=1; i < 5; i++) {
     outPtr++;
-    *outPtr = twoCompDeco(spiTransferWord());
+    *outPtr = spiTransferWord() >> 8;
   }
 
   // Save CRC bits

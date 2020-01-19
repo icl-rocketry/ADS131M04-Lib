@@ -26,6 +26,7 @@ class ADS131M04 {
     void begin(void);
     void rawChannels(int8_t * channelArrPtr, int8_t channelArrLen, int32_t * outputArrPtr);
     int32_t rawChannelSingle(int8_t channel);
+    uint16_t readReg(uint8_t reg);
 
 
   private:
@@ -33,7 +34,7 @@ class ADS131M04 {
     SPIClass* spi;
     bool initialised;
     
-    void spiCommFrame(int32_t * outputArray, uint16_t command = 0x0000);
+    void spiCommFrame(uint32_t * outputArray, uint16_t command = 0x0000);
     uint32_t spiTransferWord(uint16_t inputData = 0x0000);
     int32_t twoCompDeco(uint32_t data);
 };
