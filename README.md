@@ -43,3 +43,11 @@ uint16_t readReg(uint8_t reg);
 ```
 
 Sends a communication frame with the proper command to read the register with address ```reg```, then from the next communication frame returns the value of that register.
+
+#### Writing a single register
+
+```
+bool writeReg(uint8_t reg, uint16_t data);
+```
+
+Sends a communication frame with the proper command to write ```data``` to the register with address ```reg```. Checks the next communication frame to ensure writing has occurred, and appropriately returns ```true``` or ```false```.
