@@ -75,14 +75,14 @@ bool ADS131M04::globalChop(bool enabled, uint8_t log2delay) {
   /* Function to configure global chop mode for the ADS131M04.
 
      INPUTS:
-     enabled - determines whether to enable or disable it
-     log2delay   - Log base 2 of the desired delay in modulator clocks periods
+     enabled - Whether to enable global-chop mode.
+     log2delay   - Base 2 log of the desired delay in modulator clocks periods
      before measurment begins
      Possible values are between and including 1 and 16, to give delays
-     between 2 and 65536 clock periods.
+     between 2 and 65536 clock periods respectively
      For more information, refer to the datasheet.
 
-     Returns true if the mode was succesfully changed.
+     Returns true if settings were written succesfully.
   */
 
   uint8_t delayRegData = log2delay - 1;
