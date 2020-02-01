@@ -7,7 +7,7 @@
    https://www.ti.com/lit/gpn/ads131m04
 
    This library was made for Imperial College London Rocketry
-   Created by Daniele Valentino Bella
+   Created by Daniele Valentino Bella & Iris Clercq-Roques
 */
 
 #include <Arduino.h>
@@ -108,12 +108,15 @@ bool ADS131M04::writeReg(uint8_t reg, uint16_t data) {
 }
 
 bool ADS131M04::Gain1(uint8_t PGAGAIN0, uint8_t PGAGAIN1, uint8_t PGAGAIN2, uint8_t PGAGAIN3) {
+  /* Function to set the gain of the four channels of the ADC
+     Written by Iris Clercq-Roques
+  */
   uint16_t Gain1=PGAGAIN3<<4;
   Gain1+=PGAGAIN2;
   Gain1<<=8;
   Gain1+=(PGAGAIN1<<4);
   Gain1+=PGAGAIN0;
-  return writeReg(GAIN1, uint16_t Gain1);
+  return writeReg(GAIN1, Gain1);
 }
 
 uint16_t ADS131M04::readReg(uint8_t reg) {
