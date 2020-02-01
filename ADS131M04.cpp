@@ -107,6 +107,15 @@ bool ADS131M04::writeReg(uint8_t reg, uint16_t data) {
   }
 }
 
+bool ADS131M04::Gain1(uint8_t PGAGAIN0, uint8_t PGAGAIN1, uint8_t PGAGAIN2, uint8_t PGAGAIN3) {
+  uint16_t Gain1=PGAGAIN3<<4;
+  Gain1+=PGAGAIN2;
+  Gain1<<=8;
+  Gain1+=(PGAGAIN1<<4);
+  Gain1+=PGAGAIN0;
+  return writeReg(GAIN1, uint16_t Gain1);
+}
+
 uint16_t ADS131M04::readReg(uint8_t reg) {
   /* Reads the content of single register found at address reg
      Returns register value
