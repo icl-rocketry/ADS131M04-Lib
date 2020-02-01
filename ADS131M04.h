@@ -29,6 +29,7 @@ class ADS131M04 {
     uint16_t readReg(uint8_t reg);
     bool writeReg(uint8_t reg, uint16_t data);
     bool setGain(uint8_t log2Gain0 = 0, uint8_t log2Gain1 = 0, uint8_t log2Gain2 = 0, uint8_t log2Gain3 = 0);
+    bool globalChop(bool enabled = false, uint8_t log2delay = 4);
 
   private:
     int8_t csPin, clkoutPin, clockCh;
