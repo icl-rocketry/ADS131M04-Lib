@@ -62,6 +62,20 @@ It is a wrapper function of the ```rawChannels``` method, thus if multiple chann
 
 ### Changing ADC Settings
 
+#### Setting Gain
+
+```
+bool setGain(uint8_t log2Gain0 = 0, uint8_t log2Gain1 = 0, uint8_t log2Gain2 = 0, uint8_t log2Gain3 = 0);
+```
+
+This function sets the gain of the four channels of the ADC, using its programmable gain amplifier.
+
+```uint8_t log2Gain0 = 0, uint8_t log2Gain1 = 0, uint8_t log2Gain2 = 0, uint8_t log2Gain3 = 0``` are the inputs. These are the log base 2 of the gain to set to each channel.
+
+Function returns true if gain was succesfully set.
+
+Written by Iris Clercq-Roques.
+
 #### Changing Global-Chop mode settings
 
 ```
