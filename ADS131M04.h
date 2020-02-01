@@ -28,7 +28,7 @@ class ADS131M04 {
     int32_t rawChannelSingle(int8_t channel);
     uint16_t readReg(uint8_t reg);
     bool writeReg(uint8_t reg, uint16_t data);
-    bool Gain1(uint8_t PGAGAIN0, uint8_t PGAGAIN1, uint8_t PGAGAIN2, uint8_t PGAGAIN3);
+    bool setGain(uint8_t log2Gain0, uint8_t log2Gain1, uint8_t log2Gain2, uint8_t log2Gain3);
 
   private:
     int8_t csPin, clkoutPin, clockCh;
